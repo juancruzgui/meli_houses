@@ -2,22 +2,13 @@ import json
 
 def get_attributes(specs_dict = None):
 
-    if not specs_dict:
-        with open('specs.txt', 'r') as file:
-            #print(file.read())
-            try:
-                string = file.read()
-                string = string.replace("'", '"').replace('True','true').replace('False','false')
-                specs_dict = json.loads(string)
-            except:
-                print("Attributes not found")
-                return None
-
     attributes = {}
     #Get basic attributes
-    for attribute in specs_dict[0]['attributes']:
-        attributes[f"{attribute.get('id',None)}"] = attribute.get('text',None)
-        print(f"{attribute['id']} : {attribute['text']}")
+    try:
+        for attribute in specs_dict[0]['attributes']:
+            attributes[f"{attribute.get('id',None)}"] = attribute.get('text',None)
+    except:
+        return None, None
 
     #Get ambientes, servicios, seguridad, confort
     extras = {}
@@ -30,6 +21,8 @@ def get_attributes(specs_dict = None):
             else:
                 yes = 'Si'
             extras[f'{element}'] = yes
-            print(f"{element}: {yes}")
 
-    return attributes
+    return attributes, extras
+
+def get_pois(pois_dict = None):
+    return None

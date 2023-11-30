@@ -9,3 +9,6 @@ run_get_attri:
 
 run_all:
 	python -c 'from App.interface import run_all; run_all()'
+
+run_get_js:
+	python -c 'from App.article_scrapper import get_js; get_js()'
