@@ -2,6 +2,8 @@ import requests
 import json
 import os
 import pandas as pd
+from utils import *
+
 
 def get_states():
     #We make a request to ML API to get a list of states dictiionaries
@@ -85,7 +87,7 @@ def get_neighs():
     with open('App/ML_API/locations/neigh_list.json', 'w') as file:
         file.write(str(neighborhood_list))
 
-    print("\n✅ Done with neighborhood ids\n")
+    print(f"\n✅ Done with neighborhood ids - {len(neighborhood_list)} neighborhoods\n")
     #each neighborhood has the form
     # {"id": "TVhYQXJlbmFzIDE5VFV4QlEwTlBVM1JoWlhOd", "name": "Arenas 19"}
     return neighborhood_list
@@ -97,7 +99,7 @@ def get_neigh_info():
         with open('App/ML_API/locations/neigh_list.json', 'r') as file:
             neighborhood_list = json.load(file)
     else:
-        neighborhood_list = get_neighs
+        neighborhood_list = get_neighs()
 
     print("\n 👣 Getting full information for each neighborhood...")
 
@@ -127,7 +129,6 @@ def get_neigh_info():
 
 def make_neighs_csv():
     #We then make a dictionary of all of the neighborhoods
-
     if os.path.exists('App/ML_API/locations/neigh_infos.json'):
         with open('App/ML_API/locations/neigh_infos.json', 'r') as file:
             neighborhoods = json.load(file)
@@ -148,10 +149,9 @@ def make_neighs_csv():
     df['latitude'] = df.geo_information.apply(lambda x: x.get('location', None).get('latitude', None) if x.get('location', None) is not None else None)
     df['longitude'] = df.geo_information.apply(lambda x: x.get('location', None).get('longitude', None) if x.get('location', None) is not None else None)
     df = df.drop(columns = ['city', 'state', 'country', 'geo_information', 'subneighborhoods'])
-    df = df.dropna(subset=['latitude', 'longitude'])
 
     #We then save the new dataset
-    df.to_csv('App/ML_API/csvs/neighborhoods.csv.csv')
+    df.to_csv('App/ML_API/csvs/neighborhoods.csv')
 
     print("✅ CSV done \n")
 
@@ -223,4 +223,4 @@ def get_neighbors():
 
 #print(len(n_list))
 
-make_neighs_csv()
+#make_neighs_csv()

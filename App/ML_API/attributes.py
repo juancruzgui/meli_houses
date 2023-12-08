@@ -13,7 +13,9 @@ def get_attributes(houses= True, start = 0):
         if os.path.exists('App/ML_API/ids/houses_ids.txt'):
             with open('App/ML_API/ids/houses_ids.txt', 'r') as file:
                 property_txt = file.read()
+
         else:
+            print("noexists")
             property_txt = get_houses_ids()
         text = 'houses'
     else:
@@ -109,4 +111,4 @@ def get_attributes(houses= True, start = 0):
 
     return None
 
-get_attributes(start=6913)
+get_attributes(start=26359)

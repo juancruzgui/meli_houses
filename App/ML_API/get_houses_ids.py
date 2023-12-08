@@ -16,9 +16,9 @@ def get_houses_ids(house = True, start = 0):
 
     #Retrieve neighborhood dataset
     if os.path.exists('App/ML_API/csvs/neighborhoods.csv'):
-        df = pd.read_csv('App/ML_API/neighborhoods.csv')
+        df = pd.read_csv('App/ML_API/csvs/neighborhoods.csv')
     else:
-        df = make_neighs_csv
+        df = make_neighs_csv()
     #start a counter of properties retrieved in the run
     properties = 0
     #make an empty list to fill with propertis
